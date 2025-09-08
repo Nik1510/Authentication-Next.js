@@ -4,7 +4,7 @@ export async function GET() {
     try {
         const response = NextResponse.json(
             {
-                message:"Logout.json",
+                message:"Logout successfully",
                 success:true
             }
         );
