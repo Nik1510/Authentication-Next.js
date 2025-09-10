@@ -58,7 +58,10 @@ export async function POST(request:NextRequest){
         })
         return response;
 
-    } catch (error:any) {
-        return NextResponse.json({error:error.message},{status:500})
+    } catch (error:unknown) {
+        const errorMessage = typeof error === "object" && error !== null && "message" in error
+            ? (error as { message: string }).message
+            : String(error);
+        return NextResponse.json({error: errorMessage},{status:500})
     }
 }

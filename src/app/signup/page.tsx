@@ -41,8 +41,14 @@ export default function Signup() {
       await axios.post("/api/users/signup", user);
       toast.success("Signup successful");
       router.push("/login");
-    } catch (error: any) {
-      toast.error(error?.response?.data?.error || error.message || "Signup failed");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.error || error.message || "Signup failed");
+      } else if (error instanceof Error) {
+        toast.error(error.message || "Signup failed");
+      } else {
+        toast.error("Signup failed");
+      }
     } finally {
       setLoading(false);
     }

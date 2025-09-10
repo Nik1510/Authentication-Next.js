@@ -107,12 +107,7 @@ export default function ProfilePage() {
             <p className="text-sm text-slate-600">
               Need to manage account settings? (will be added soon)
             </p>
-            <Link
-              href="/settings"
-              className="text-sm font-medium text-slate-800 hover:text-slate-900 underline underline-offset-2"
-            >
-              Go to Settings
-            </Link>
+            
           </div>
         </div>
       </section>

@@ -38,7 +38,10 @@ export const sendEmail = async({email,emailType,userId}:any)=>{
         (mailOptions);
         return mailresponse;
 
-    } catch (error:any) {
-        throw new Error(error.message);
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        }
+        throw error;
     }
 }

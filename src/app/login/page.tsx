@@ -12,23 +12,8 @@ export default function LoginPage() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPwd, setShowPwd] = useState(false);
-  function ForgotPasswordLink() {
-  return (
-    <Link
-      href="#"
-      role="button"
-      onClick={(e) => {
-        e.preventDefault();
-        toast("Forgot password will be added soon", {
-          icon: "⏳",
-        });
-      }}
-      className="text-xs font-medium text-blue-600 hover:text-blue-500"
-    >
-      Forgot password?
-    </Link>
-  );
-}
+  
+
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -48,8 +33,14 @@ export default function LoginPage() {
       const response = await axios.post("/api/users/login", user);
       toast.success("Login success");
       router.push("/profile");
-    } catch (error: any) {
-      toast.error(error?.response?.data?.error || error.message || "Login failed");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.error || error.message || "Login failed");
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Login failed");
+      }
     } finally {
       setLoading(false);
     }
