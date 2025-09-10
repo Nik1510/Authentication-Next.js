@@ -8,6 +8,7 @@ connect();
 export async function POST(request:NextRequest) {
     try {
         const reqBody = await request.json();
+        console.log(reqBody);
         const {token} = reqBody;
         console.log(token);
 
