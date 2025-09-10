@@ -28,8 +28,12 @@ export default function ProfilePage() {
       const res = await axios.get("/api/users/me");
       setData(res?.data?.data?._id ?? "");
       toast.success("Fetched user details");
-    } catch (e: any) {
-      toast.error("Failed to fetch user details");
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        toast.error(`Failed to fetch user details: ${e.message}`);
+      } else {
+        toast.error("Failed to fetch user details");
+      }
     } finally {
       setLoading(false);
     }

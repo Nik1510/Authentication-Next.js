@@ -12,7 +12,9 @@ export async function GET(request:NextResponse) {
         const user = await User.findOne({_id:userId}).select("-password ");
         return NextResponse.json({message:"User Found",data:user})
 
-    } catch (error:any) {
-        return NextResponse.json({error:error.message},{status:400})
-    }
+    } catch (error: unknown) {
+  const message = error instanceof Error ? error.message : "Server error";
+  return NextResponse.json({ error: message }, { status: 500 });
+}
+
 }
